@@ -33,7 +33,7 @@ class SudokuBoard:
 
         for i in range(sqr_row, sqr_row + 3):
             for j in range(sqr_col, sqr_col + 3):
-                if num in self.board[i][j]:
+                if num == self.board[i][j]:
                     return False
 
         return True
@@ -85,18 +85,52 @@ class SudokuBoard:
         self.board[row][col] = num
         return
 
-    def get_cell(self, row: int, col: int) -> int
+    def get_cell(self, row: int, col: int) -> int:
         '''return number in celll'''
         return self.board[row][col]
 
     def display(self) -> None:
         '''dispay board'''
-        pass
+        for i in range(9):
+            rows = ['|']
+            for j in range(9):
+                if j % 3 == 0 and j != 0:
+                    rows.append('|')
+                if self.board[i][j] == 0:
+                    rows.append('.')
+                else:
+                    rows.append(str(self.board[i][j]))
+            rows.append('|')
+            if i % 3 == 0:
+                print('------------------------')
+            print(' '.join(rows))
+        print('------------------------')
 
     def __str__(self) -> None:
         '''print board with print statement'''
-        pass
+        rows = []
+        for row in self.board:
+            rows.append(' '.join( '.' if num == 0 else str(num) for num in row))
+        return '\n'.join(rows)
 
 
 if __name__ == "__main__":
-    pass
+    test_grid = [
+        [5, 3, 0, 0, 7, 0, 0, 0, 0],
+        [6, 0, 0, 1, 9, 5, 0, 0, 0],
+        [0, 9, 8, 0, 0, 0, 0, 6, 0],
+        [8, 0, 0, 0, 6, 0, 0, 0, 3],
+        [4, 0, 0, 8, 0, 3, 0, 0, 1],
+        [7, 0, 0, 0, 2, 0, 0, 0, 6],
+        [0, 6, 0, 0, 0, 0, 2, 8, 0],
+        [0, 0, 0, 4, 1, 9, 0, 0, 5],
+        [0, 0, 0, 0, 8, 0, 0, 7, 9]
+    ]
+
+    board = SudokuBoard(test_grid)
+    print("Test board:")
+    board.display()
+    print(board)
+    print(f"Empty cells: {len(board.get_empty_cells())}")
+    print(f"Is valid move (0,2,4): {board.is_valid_move(0, 2, 4)}")
+    print(f"Is complete: {board.solved()}")
