@@ -1,2 +1,4 @@
 
-from .sudoku_solver import SudokuBoard
+from .sudoku_board import SudokuBoard
+from .solvers import *
+from .utils import *
